@@ -199,6 +199,10 @@ ul.breadcrumb li {
   display: inline;
 }
 
+ol {
+  padding-left: 2rem;
+}
+
 button {
   margin-top: 1rem;
   background-color: var(--primary-color);
