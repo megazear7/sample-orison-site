@@ -5,9 +5,7 @@ export default async (products, disabled) => html`
     <section>
       <h2>
         ${product.fields.title}
-        <small>
-          ${product.fields.inStock ? '$' + product.fields.price : 'Out of stock'}
-        </small>
+        <small>${'$' + product.fields.price}</small>
       </h2>
       <div class="small-overview">
         <div>

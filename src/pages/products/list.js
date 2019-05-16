@@ -20,10 +20,9 @@ export default async (context, slug) => {
     name: entry.fields.slug,
     html: html`
       <section>
-        <h2>${entry.fields.title}
-          <small>
-            ${entry.fields.inStock ? '$' + entry.fields.price : 'Out of stock'}
-          </small>
+        <h2>
+          ${entry.fields.title}
+          <small>${'$' + entry.fields.price}</small>
         </h2>
         <div>
           <img alt="${entry.fields.desktopHeroImage.fields.description}"

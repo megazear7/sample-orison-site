@@ -21,9 +21,7 @@ export default async (context, slug) => {
     html: html`
       <h5>
         <a href="${'/products/' + entry.fields.slug + '.html'}">${entry.fields.title}</a>
-        <small>
-          $${entry.fields.price}
-        </small>
+        <small>$${entry.fields.price}</small>
       </h5>
       <img alt="${entry.fields.desktopHeroImage.fields.description}"
            src="${entry.fields.desktopHeroImage.fields.file.url}?w=100&h=100&fit=thumb">
