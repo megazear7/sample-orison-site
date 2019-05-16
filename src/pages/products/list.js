@@ -1,10 +1,9 @@
 import { html } from 'orison';
 import client from '../../contentful.js';
 
-function searchParams(slug, category) {
+function searchParams(slug) {
   var params = {
     'content_type': 'product',
-    'fields.category': category,
     'fields.disabled[ne]': true
   };
 
@@ -15,7 +14,7 @@ function searchParams(slug, category) {
 
 export default async (context, slug) => {
   const site = await client.getEntry(context.root.data.siteId);
-  const entries = await client.getEntries(searchParams(slug, context.data.category));
+  const entries = await client.getEntries(searchParams(slug));
 
   return entries.items.map(entry => ({
     name: entry.fields.slug,
@@ -30,7 +29,7 @@ export default async (context, slug) => {
           <img alt="${entry.fields.desktopHeroImage.fields.description}"
                src="${entry.fields.desktopHeroImage.fields.file.url}?w=800">
         </div>
-        ${context.mdString(entry.fields.content)}
+        ${context.mdString(entry.fields.body)}
         ${ ! site.fields.disabled ? html`
           <div class="add-to-cart-outer">
             <div class="add-to-cart-container">

@@ -1,10 +1,9 @@
 import { html } from 'orison';
 import client from '../../../contentful.js';
 
-function searchParams(skuId, category) {
+function searchParams(skuId) {
   var params = {
     'content_type': 'product',
-    'fields.category': category,
     'fields.disabled[ne]': true
   };
 
@@ -15,7 +14,7 @@ function searchParams(skuId, category) {
 
 export default async (context, slug) => {
   const site = await client.getEntry(context.root.data.siteId);
-  const entries = await client.getEntries(searchParams(slug, context.data.category));
+  const entries = await client.getEntries(searchParams(slug));
 
   return entries.items.map(entry => ({
     name: entry.fields.skuId,

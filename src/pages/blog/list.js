@@ -23,7 +23,7 @@ export default async (context, slug) => {
           <img alt="${entry.fields.desktopHeroImage.fields.description}"
                src="${entry.fields.desktopHeroImage.fields.file.url}?w=800">
         </div>
-        ${context.mdString(entry.fields.content)}
+        ${context.mdString(entry.fields.body)}
       </section>
     `
   }));

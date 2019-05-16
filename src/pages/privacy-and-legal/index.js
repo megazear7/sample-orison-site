@@ -7,7 +7,7 @@ export default async context => {
   return html`
     <section>
       <h2>${entry.fields.title}</h2>
-      ${context.mdString(entry.fields.content)}
+      ${context.mdString(entry.fields.body)}
     </section>
   `;
 };

@@ -15,7 +15,7 @@ export default async context => {
   return html`
     <section>
       <h2>${contentfulPage.fields.title}</h2>
-      ${context.mdString(contentfulPage.fields.content)}
+      ${context.mdString(contentfulPage.fields.body)}
       <div id="error-message"></div>
     </section>
     ${productList(entries.items, site.fields.disabled)}
