@@ -24,8 +24,9 @@ export default async (context, slug) => {
           ${entry.fields.title}
           <small>${'$' + entry.fields.price}</small>
         </h2>
-        <div>
-          <img alt="${entry.fields.desktopHeroImage.fields.description}"
+        <div class="mobile-no-padding">
+          <img class="max-width"
+               alt="${entry.fields.desktopHeroImage.fields.description}"
                src="${entry.fields.desktopHeroImage.fields.file.url}?w=800">
         </div>
         ${context.mdString(entry.fields.body)}

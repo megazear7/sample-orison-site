@@ -199,7 +199,7 @@ ul.breadcrumb li {
   display: inline;
 }
 
-ol {
+ol, ul {
   padding-left: 2rem;
 }
 
@@ -441,6 +441,10 @@ img {
     max-width: unset;
   }
 
+  .max-width {
+    max-width: 100%;
+  }
+
   .header-container img {
     max-width: 100%;
   }
@@ -455,5 +459,11 @@ img {
 
   .add-to-cart, .cart-count, .remove-from-cart {
     font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width : 800px) {
+  .mobile-no-padding {
+    padding: 0;
   }
 }
