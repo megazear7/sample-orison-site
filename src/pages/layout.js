@@ -49,8 +49,7 @@ export default async context => {
       <meta property="og:site_name" content="gta">
       <meta property="og:image" content="icons/icon-512x512.png" />
     </head>
-    <body data-stripe-public-key="${process.env.STRIPE_PUBLIC_KEY}"
-          data-stripe-redirect-url="${process.env.HOST}">
+    <body>
       <div class="header-container">
         ${desktopImage ? html`<img class="desktop" src="${desktopImage}">` : ''}
         ${mobileImage ? html`<img class="mobile" src="${mobileImage}">` : ''}
@@ -61,7 +60,6 @@ export default async context => {
         ${context.page.html}
       </main>
       ${footer()}
-      <script src="https://js.stripe.com/v3"></script>
     </body>
   </html>
   `;

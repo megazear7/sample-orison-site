@@ -23,10 +23,10 @@ export default async (products, disabled) => html`
       ${ ! disabled ? html`
         <div class="add-to-cart-outer">
           <div class="add-to-cart-container">
-            <button class="remove-from-cart" data-sku-id="${product.fields.skuId}">-</button>
-            <div class="cart-count" data-sku-id="${product.fields.skuId}"></div>
-            <button class="add-to-cart" role="link" data-sku-id="${product.fields.skuId}">Add to cart</button>
-            <button class="add-more-to-cart" role="link" data-sku-id="${product.fields.skuId}">+</button>
+            <button class="remove-from-cart" data-slug="${product.fields.slug}">-</button>
+            <div class="cart-count" data-slug="${product.fields.slug}"></div>
+            <button class="add-to-cart" role="link" data-slug="${product.fields.slug}">Add to cart</button>
+            <button class="add-more-to-cart" role="link" data-slug="${product.fields.slug}">+</button>
           </div>
         </div>
       ` : ''}

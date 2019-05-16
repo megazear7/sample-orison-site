@@ -33,10 +33,10 @@ export default async (context, slug) => {
         ${ ! site.fields.disabled ? html`
           <div class="add-to-cart-outer">
             <div class="add-to-cart-container">
-              <button class="remove-from-cart" data-sku-id="${entry.fields.skuId}">-</button>
-              <div class="cart-count" data-sku-id="${entry.fields.skuId}"></div>
-              <button class="add-to-cart" role="link" data-sku-id="${entry.fields.skuId}">Add to cart</button>
-              <button class="add-more-to-cart" role="link" data-sku-id="${entry.fields.skuId}">+</button>
+              <button class="remove-from-cart" data-slug="${entry.fields.slug}">-</button>
+              <div class="cart-count" data-slug="${entry.fields.slug}"></div>
+              <button class="add-to-cart" role="link" data-slug="${entry.fields.slug}">Add to cart</button>
+              <button class="add-more-to-cart" role="link" data-slug="${entry.fields.slug}">+</button>
             </div>
           </div>
         ` : '' }

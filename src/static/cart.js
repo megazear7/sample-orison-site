@@ -28,15 +28,14 @@ export default class Cart {
       shippingCountry: false,
     };
 
-    this.stripe = Stripe(this.stripePublicKey);
     this.initSkuCounts();
     this.setListeners();
   }
 
   initSkuCounts() {
     this.cartCountElements.forEach(div => {
-      const skuId = div.dataset.skuId;
-      const skuCount = this.cart[skuId];
+      const slug = div.dataset.slug;
+      const skuCount = this.cart[slug];
       if (skuCount >= 1) {
         div.innerText = skuCount;
         div.parentElement.classList.add('added-to-cart');
@@ -63,65 +62,15 @@ export default class Cart {
     this.checkoutElements(scope).forEach(button =>
       button.addEventListener('click', e =>
         this.checkout()));
-
-    // TODO Perform better shipping validation
-
-    document.querySelector('[name="shippingName"]')
-    .addEventListener('change', ({ target: { value }}) => {
-      this.validations.shippingName = value.length > 0;
-      this.updateCheckoutValidation();
-    });
-
-    document.querySelector('[name="shippingAddress"]')
-    .addEventListener('change', ({ target: { value }}) => {
-      this.validations.shippingAddress = value.length > 0;
-      this.updateCheckoutValidation(scope);
-    });
-
-    document.querySelector('[name="shippingAddressZip"]')
-    .addEventListener('change', ({ target: { value }}) => {
-      this.validations.shippingAddressZip = value.length === 5;
-      this.updateCheckoutValidation(scope);
-    });
-
-    document.querySelector('[name="shippingAddressState"]')
-    .addEventListener('change', ({ target: { value }}) => {
-      this.validations.shippingAddressState = value.length > 0;
-      this.updateCheckoutValidation(scope);
-    });
-
-    document.querySelector('[name="shippingAddressCity"]')
-    .addEventListener('change', ({ target: { value }}) => {
-      this.validations.shippingAddressCity = value.length > 0;
-      this.updateCheckoutValidation(scope);
-    });
-
-    document.querySelector('[name="shippingCountry"]')
-    .addEventListener('change', ({ target: { value }}) => {
-      this.validations.shippingCountry = value.length > 0;
-      this.updateCheckoutValidation(scope);
-    });
-  }
-
-  updateCheckoutValidation(scope) {
-    if (this.checkValidShippingAddress()) {
-      this.checkoutElements().forEach(checkoutElement => checkoutElement.disabled = false);
-    } else {
-      this.checkoutElements(scope).forEach(checkoutElement => checkoutElement.disabled = true);
-    }
-  }
-
-  checkValidShippingAddress() {
-    return Object.keys(this.validations).map(k => this.validations[k]).reduce((val1, val2) => val1 && val2, true);
   }
 
   addToCart(button) {
-    const skuId = button.dataset.skuId;
+    const slug = button.dataset.slug;
     try {
-      this.cart[skuId] ? this.cart[skuId] = this.cart[skuId] + 1 : this.cart[skuId] = 1;
+      this.cart[slug] ? this.cart[slug] = this.cart[slug] + 1 : this.cart[slug] = 1;
       localStorage.setItem(this.id, JSON.stringify(this.cart));
       button.parentElement.classList.add('added-to-cart');
-      button.parentElement.querySelector('.cart-count').innerText = this.cart[skuId];
+      button.parentElement.querySelector('.cart-count').innerText = this.cart[slug];
       document.activeElement.blur();
       this.updateCartCount();
     } catch (e) {
@@ -132,15 +81,15 @@ export default class Cart {
   }
 
   removeFromCart(button) {
-    const skuId = button.dataset.skuId;
+    const slug = button.dataset.slug;
     try {
-      if (this.cart[skuId] > 1) {
-        this.cart[skuId] ? this.cart[skuId] = this.cart[skuId] - 1 : this.cart[skuId] = 1;
-        button.parentElement.querySelector('.cart-count').innerText = this.cart[skuId];
+      if (this.cart[slug] > 1) {
+        this.cart[slug] ? this.cart[slug] = this.cart[slug] - 1 : this.cart[slug] = 1;
+        button.parentElement.querySelector('.cart-count').innerText = this.cart[slug];
       } else {
         button.parentElement.classList.remove('added-to-cart');
         button.parentElement.querySelector('.cart-count').innerText = '';
-        delete this.cart[skuId]
+        delete this.cart[slug]
       }
       localStorage.setItem(this.id, JSON.stringify(this.cart));
       this.updateCartCount();
@@ -177,7 +126,7 @@ export default class Cart {
       cartPreview.appendChild(skuPreview);
 
       const skuPreviewReady = new Promise(resolve => {
-        fetch(`/products/previews/${item.sku}.fragment.html`)
+        fetch(`/products/previews/${item.slug}.fragment.html`)
         .then(response => response.text())
         .then(preview => {
           skuPreview.innerHTML = preview
@@ -195,44 +144,29 @@ export default class Cart {
     return cartPreview;
   }
 
-  getShippingInfo() {
-    return {
-      name: document.querySelector('[name="shippingName"]').value,
-      address: document.querySelector('[name="shippingAddress"]').value,
-      zip: document.querySelector('[name="shippingAddressZip"]').value,
-      state: document.querySelector('[name="shippingAddressState"]').value,
-      city: document.querySelector('[name="shippingAddressCity"]').value,
-      country: document.querySelector('[name="shippingCountry"]').value,
-    }
-  }
-
   checkout() {
-    if (this.checkValidShippingAddress()) {
-      fetch('/.netlify/functions/checkout', {
-        method: 'POST',
-        body: JSON.stringify({ cart: this.cart, shippingInfo: this.getShippingInfo() }),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(json => json.sessionId)
-      .then(sessionId => {
-        this.stripe.redirectToCheckout({ sessionId: sessionId })
-      })
-      .then(result => {
-        if (result && result.error) {
-          this.errorMessageElement.textContent = result.error.message;
-          this.errorMessageElement.scrollIntoView({behavior: 'smooth'});
-        }
-      })
-      .catch(e => {
-        console.log(e);
-        alert('There was an error during checkout. Your cart has been saved, please try again.')
-      });
-    } else {
-      alert('Shipping address is invalid');
-    }
+    fetch('/.netlify/functions/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ cart: this.cart }),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(json => json.message)
+    .then(message => {
+      alert(message);
+    })
+    .then(result => {
+      if (result && result.error) {
+        this.errorMessageElement.textContent = result.error.message;
+        this.errorMessageElement.scrollIntoView({behavior: 'smooth'});
+      }
+    })
+    .catch(e => {
+      console.log(e);
+      alert('There was an error during checkout. Your cart has been saved, please try again.')
+    });
   }
 
   get cartCountElements() {
@@ -263,14 +197,6 @@ export default class Cart {
     return document.querySelector('.cart-preview');
   }
 
-  get stripePublicKey() {
-    return document.body.dataset.stripePublicKey;
-  }
-
-  get redirectUrl() {
-    return document.body.dataset.stripeRedirectUrl;
-  }
-
   get successUrl() {
     return this.redirectUrl + '/checkout-success.html';
   }
@@ -284,7 +210,7 @@ export default class Cart {
   }
 
   get items() {
-    return Object.keys(this.cart).map(key => ({sku: key, quantity: this.cart[key]}));
+    return Object.keys(this.cart).map(key => ({slug: key, quantity: this.cart[key]}));
   }
 
   get count() {

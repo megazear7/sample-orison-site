@@ -1,13 +1,13 @@
 import { html } from 'orison';
 import client from '../../../contentful.js';
 
-function searchParams(skuId) {
+function searchParams(slug) {
   var params = {
     'content_type': 'product',
     'fields.disabled[ne]': true
   };
 
-  if (skuId) params['fields.skuId'] = skuId;
+  if (slug) params['fields.slug'] = slug;
 
   return params;
 }
@@ -17,7 +17,7 @@ export default async (context, slug) => {
   const entries = await client.getEntries(searchParams(slug));
 
   return entries.items.map(entry => ({
-    name: entry.fields.skuId,
+    name: entry.fields.slug,
     html: html`
       <h5>
         <a href="${'/products/' + entry.fields.slug + '.html'}">${entry.fields.title}</a>
@@ -29,10 +29,10 @@ export default async (context, slug) => {
            src="${entry.fields.desktopHeroImage.fields.file.url}?w=100&h=100&fit=thumb">
       <div class="add-to-cart-outer">
         <div class="add-to-cart-container add-to-cart-container-preview">
-          <button class="remove-from-cart" data-sku-id="${entry.fields.skuId}">-</button>
-          <div class="cart-count" data-sku-id="${entry.fields.skuId}"></div>
-          <button class="add-to-cart" role="link" data-sku-id="${entry.fields.skuId}">Add to cart</button>
-          <button class="add-more-to-cart" role="link" data-sku-id="${entry.fields.skuId}">+</button>
+          <button class="remove-from-cart" data-slug="${entry.fields.slug}">-</button>
+          <div class="cart-count" data-slug="${entry.fields.slug}"></div>
+          <button class="add-to-cart" role="link" data-slug="${entry.fields.slug}">Add to cart</button>
+          <button class="add-more-to-cart" role="link" data-slug="${entry.fields.slug}">+</button>
         </div>
       </div>
     `
