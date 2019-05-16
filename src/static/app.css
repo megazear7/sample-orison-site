@@ -262,7 +262,7 @@ img {
   background-color: var(--tertiary-color);
 }
 
-.desktop {
+.desktop, .desktop-flex {
   display: none;
 }
 
@@ -396,6 +396,10 @@ img {
 
   .desktop {
     display: block;
+  }
+
+  .desktop-flex {
+    display: flex;
   }
 
   nav a {
