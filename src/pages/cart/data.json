@@ -1,0 +1,7 @@
+{
+  "title": "Cart",
+  "cssClass": "cart",
+  "orison": {
+    "order": 300
+  }
+}

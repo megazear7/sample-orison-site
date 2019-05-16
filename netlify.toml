@@ -1,0 +1,11 @@
+[build]
+  command = "node ./build.js build"
+  functions = "lambda"
+  publish = "docs"
+  environment = { NODE_VERSION = "10.15.3" }
+
+[context.production]
+  functions = "api"
+
+[context.deploy-preview]
+  functions = "api"

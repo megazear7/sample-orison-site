@@ -1,0 +1,23 @@
+{
+  "name": "mikaylas-shop",
+  "version": "1.0.0",
+  "description": "The website for Mikayls shop",
+  "dependencies": {
+    "contentful": "^7.5.1",
+    "dotenv": "^8.0.0",
+    "express-http-proxy": "^1.5.1",
+    "netlify-lambda": "^1.4.7",
+    "orison": "^1.0.30",
+    "stripe": "^7.0.0",
+    "usps-webtools": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node --inspect=5858 ./build.js serve | netlify-lambda serve api",
+    "build": "node ./build.js build",
+    "static": "node ./build.js static"
+  },
+  "author": "Alex Lockhart",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Sample Site",
+  "short_name": "Sample",
+  "description": "A sample content management integration with JAMstack",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#333a6f",
+  "background_color": "#9fc5e7",
+  "icons": [
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-32x32.png",
+      "sizes": "24x24",
+      "type": "image/png"
+    }
+  ]
+}
