@@ -29,10 +29,10 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   line-height: 1;
   font-weight: 400;
-  color: var(--grey);
+  color: var(--tertiary-color);
   text-shadow: var(--text-shadow);
   padding: 0 1rem;
   margin-bottom: 1rem;
@@ -139,7 +139,7 @@ pre {
 header {
   position: absolute;
   width: 100%;
-  bottom: 0;
+  top: 0;
 }
 
 nav {
@@ -409,7 +409,7 @@ img {
   }
 
   h1 {
-    font-size: 5rem;
+    font-size: 7rem;
     padding: 0;
   }
 
