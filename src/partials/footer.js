@@ -3,9 +3,6 @@ import { html } from 'orison';
 export default () => html`
   <footer>
     <p>
-      © Megazear LLC, 2018. All rights reserved
-    </p>
-    <p>
       <a href="/privacy-and-legal">Privacy Policy and Legal</a>
     </p>
     <p>
