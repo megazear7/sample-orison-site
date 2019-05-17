@@ -32,7 +32,7 @@ h1 {
   font-size: 3rem;
   line-height: 1;
   font-weight: 400;
-  color: white;
+  color: var(--grey);
   text-shadow: var(--text-shadow);
   padding: 0 1rem;
   margin-bottom: 1rem;
